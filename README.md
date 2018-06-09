@@ -1,2 +1,2 @@
 # reactivator
-http://reactivex.io/ implementation in the Golang Language
+[ReactiveX](http://reactivex.io/) implementation in the Golang Language
