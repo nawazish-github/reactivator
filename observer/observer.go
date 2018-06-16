@@ -1,14 +1,14 @@
 package observer
 
 type Observer struct {
-	onNext     OnNext
-	onError    OnError
-	onComplete OnComplete
+	OnNext     OnNext
+	OnError    OnError
+	OnComplete OnComplete
 }
 
 type OnNext func(interface{})
-type OnError func(interface{})
-type OnComplete func(interface{})
+type OnError func(error)
+type OnComplete func()
 
 func (observer *Observer) Dispose() {
 

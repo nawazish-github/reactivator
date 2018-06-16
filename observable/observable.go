@@ -4,6 +4,7 @@ package observable
 
 import (
 	"errors"
+	"log"
 
 	"github.com/nawazish-github/reactivator/observer"
 )
@@ -30,6 +31,29 @@ func From(data interface{}) (Observable, error) {
 	}
 }
 
-func (observable Observable) subscribe(observer observer.Observer) {
-
+func (observable Observable) Subscribe(observer observer.Observer) chan struct{} {
+	subscriptionChannel := make(chan struct{})
+	go func() {
+		var e error = nil
+		if observable != nil {
+			for seq := range observable {
+				switch tipe := seq.(type) {
+				case error:
+					observer.OnError(tipe)
+					e = tipe
+				default:
+					observer.OnNext(tipe)
+				}
+			}
+			if e == nil {
+				observer.OnComplete()
+			} else {
+				log.Println("observable did not complete successfully")
+			}
+			subscriptionChannel <- struct{}{}
+		} else {
+			log.Println("observable is nil")
+		}
+	}()
+	return subscriptionChannel
 }
