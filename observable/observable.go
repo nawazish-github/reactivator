@@ -4,6 +4,8 @@ package observable
 
 import (
 	"errors"
+
+	"github.com/nawazish-github/reactivator/observer"
 )
 
 type Observable <-chan interface{}
@@ -17,7 +19,6 @@ func From(data interface{}) (Observable, error) {
 			for _, val := range t {
 				obsChan <- val
 			}
-
 		}()
 		return obsChan, nil
 	case <-chan interface{}:
@@ -29,6 +30,6 @@ func From(data interface{}) (Observable, error) {
 	}
 }
 
-func (observable Observable) subscribe() {
+func (observable Observable) subscribe(observer observer.Observer) {
 
 }
