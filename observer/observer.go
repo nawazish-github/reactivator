@@ -16,7 +16,7 @@ func (observer *Observer) Dispose() {
 
 }
 
-func New(eventHandlers ...handlers.EventHandler) Observer {
+func RegisterHandlers(eventHandlers ...handlers.EventHandler) Observer {
 	observer := DefaultObserver
 	if len(eventHandlers) > 0 {
 		for _, handler := range eventHandlers {
@@ -44,10 +44,10 @@ func (observer Observer) Handle(seq interface{}) {
 
 var DefaultObserver = Observer{
 	OnNext: func(seq interface{}) {
-		log.Println(seq)
+		log.Println("Default OnNext: ", seq)
 	},
 	OnComplete: func() {
-		log.Println("OnComplete signalled")
+		log.Println("Default OnComplete signalled")
 	},
 	OnError: func(e error) {
 		log.Fatal(e)
