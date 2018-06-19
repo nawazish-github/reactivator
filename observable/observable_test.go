@@ -28,3 +28,19 @@ func TestFromOperatorWithUniformDataAndDefaultOnNextObserver(t *testing.T) {
 	assert.Len(t, data, 3, "Length of sequence emitted did not match")
 	assert.Equal(t, expectation, data, "Sequence data emitted by Observable and received by Observer did not match")
 }
+
+func TestFromOperatorWithUniformDataAndDefaultOnCompleteObserver(t *testing.T) {
+	testTable := []interface{}{1, 2, 3}
+	observable, err := From(testTable)
+	if err != nil {
+		t.Errorf("Could not create observable from Uniform data slice ")
+	}
+	data := []interface{}{}
+	observer := observer.New(handlers.OnComplete(func() {
+		data = append(data, 1) //adding one to data slice signifying that OnComplete was called
+	}))
+	subChan := observable.Subscribe(observer)
+	<-subChan
+
+	assert.Len(t, data, 1, "Length of sequence emitted did not match")
+}
