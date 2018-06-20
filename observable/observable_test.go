@@ -1,6 +1,7 @@
 package observable
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/nawazish-github/reactivator/handlers"
@@ -51,16 +52,63 @@ func TestFromOperator_ShouldCallOnlyOnCompleteHandler(t *testing.T) {
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
-
-	onCompleteFlag := false
-	ob := observer.RegisterHandlers(handlers.OnComplete(func() { onCompleteFlag = true }),
+	ob := observer.RegisterHandlers(handlers.OnComplete(func() {}),
 		handlers.OnNext(func(seq interface{}) { t.Fail() }),
 		handlers.OnError(func(e error) { t.Fail() }),
 	)
 
 	<-observable.Subscribe(ob)
+}
 
-	if !onCompleteFlag {
+func TestFromOperator_ShouldCallOnlyOnErrorHandler(t *testing.T) {
+	testTable := []interface{}{errors.New("Error")}
+	observable, err := From(testTable)
+	if err != nil {
+		t.Errorf("Could not create observable from Uniform data slice ")
+	}
+
+	ob := observer.RegisterHandlers(handlers.OnComplete(func() { t.Fail() }),
+		handlers.OnNext(func(seq interface{}) { t.Fail() }),
+		handlers.OnError(func(e error) {}),
+	)
+
+	<-observable.Subscribe(ob)
+}
+
+func TestFromOperator_ShouldNotCallOnErrorHandler(t *testing.T) {
+	testTable := []interface{}{1}
+	observable, err := From(testTable)
+	if err != nil {
+		t.Errorf("Could not create observable from Uniform data slice ")
+	}
+
+	ob := observer.RegisterHandlers(handlers.OnComplete(func() {}),
+		handlers.OnNext(func(seq interface{}) {}),
+		handlers.OnError(func(e error) { t.Fail() }),
+	)
+
+	<-observable.Subscribe(ob)
+}
+
+func TestFromOperator_ShouldNotCallOnCompleteHandler(t *testing.T) {
+	testTable := []interface{}{1, 2, errors.New("Error")}
+	observable, err := From(testTable)
+	if err != nil {
+		t.Errorf("Could not create observable from Uniform data slice ")
+	}
+
+	//this flags help assert that the corresponding handler functions were indeed called.
+	onNextHandlerFlag := true
+	onErrorHandlerFlag := true
+
+	ob := observer.RegisterHandlers(handlers.OnComplete(func() { t.Fail() }),
+		handlers.OnNext(func(seq interface{}) { onNextHandlerFlag = false }),
+		handlers.OnError(func(e error) { onErrorHandlerFlag = false }),
+	)
+
+	<-observable.Subscribe(ob)
+
+	if onNextHandlerFlag || onErrorHandlerFlag {
 		t.Fail()
 	}
 }
