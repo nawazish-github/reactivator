@@ -16,7 +16,7 @@ func (observer *Observer) Dispose() {
 
 }
 
-func RegisterObservers(eventHandlers ...handlers.EventHandler) Observer {
+func RegisterHandlers(eventHandlers ...handlers.EventHandler) Observer {
 	observer := DefaultObserver
 	if len(eventHandlers) > 0 {
 		for _, handler := range eventHandlers {
