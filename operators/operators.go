@@ -2,6 +2,7 @@ package operators
 
 import (
 	"errors"
+	"time"
 
 	"github.com/nawazish-github/reactivator/observable"
 )
@@ -25,5 +26,30 @@ func Range(start int, length int) (observable.Observable, error) {
 			i++
 		}
 	}()
+	return observable, nil
+}
+
+func Interval(d time.Duration) (observable.Observable, error) {
+
+	if d < 0 {
+		return nil, errors.New("Illegal Argument: Negative duration for Interval operator")
+	}
+
+	observable := make(chan interface{})
+
+	ticker := time.NewTicker(d)
+	//defer ticker.Stop()
+
+	counter := 0
+	go func() {
+		for {
+			select {
+			case <-ticker.C:
+				observable <- counter
+				counter++
+			}
+		}
+	}()
+
 	return observable, nil
 }
