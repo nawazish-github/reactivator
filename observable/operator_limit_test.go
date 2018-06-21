@@ -14,3 +14,14 @@ func TestLimitOperator_ShouldReturnErrorWhenLengthIsNegative(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestLimitOperator_ShouldReturnErrorWhenObservableIsNil(t *testing.T) {
+	length := 6
+	var testObservable Observable
+
+	_, err := testObservable.Limit(length)
+
+	if err == nil {
+		t.Fail()
+	}
+}
