@@ -2,6 +2,7 @@ package operators
 
 import (
 	"testing"
+	"time"
 )
 
 func TestRange_ShouldReturnErrorIfLengthIsNegative(t *testing.T) {
@@ -54,5 +55,39 @@ func TestRange_ShouldReturnValidObservable(t *testing.T) {
 			t.Fail()
 		}
 		counter++
+	}
+}
+
+func TestIntervalOperator_ShouldReturnValidIntervalObserver(t *testing.T) {
+	duration := time.Duration(time.Second)
+
+	observable, err := Interval(duration)
+	if err != nil {
+		t.Fail()
+	}
+	if observable == nil {
+		t.Fail()
+	}
+
+	doneChan := make(chan struct{})
+	go func() {
+		time.Sleep(10 * time.Second)
+		doneChan <- struct{}{}
+	}()
+
+	counter := 0
+	var sliceOfInt []int
+ForLoop:
+	for {
+		select {
+		case <-doneChan:
+			break ForLoop
+		case <-observable:
+			sliceOfInt = append(sliceOfInt, counter)
+			counter++
+		}
+	}
+	if len(sliceOfInt) != 10 {
+		t.Fail()
 	}
 }
