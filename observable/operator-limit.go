@@ -3,6 +3,11 @@ package observable
 import "errors"
 
 func (observable Observable) Limit(limit int) (Observable, error) {
+
+	if limit < 0 {
+		return nil, errors.New("Illegal Argument: Negative limit length")
+	}
+
 	if observable == nil {
 		return nil, errors.New("Nil Observable: Can't apply Limit operator on Nil Observer")
 	}
