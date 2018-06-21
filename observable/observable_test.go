@@ -10,8 +10,9 @@ import (
 )
 
 func TestFromOperatorWithUniformDataAndDefaultOnNextObserver(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{1, 2, 3}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
@@ -31,8 +32,9 @@ func TestFromOperatorWithUniformDataAndDefaultOnNextObserver(t *testing.T) {
 }
 
 func TestFromOperatorWithUniformDataAndDefaultOnCompleteObserver(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{1, 2, 3}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
@@ -47,8 +49,9 @@ func TestFromOperatorWithUniformDataAndDefaultOnCompleteObserver(t *testing.T) {
 }
 
 func TestFromOperator_ShouldCallOnlyOnCompleteHandler(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
@@ -61,8 +64,9 @@ func TestFromOperator_ShouldCallOnlyOnCompleteHandler(t *testing.T) {
 }
 
 func TestFromOperator_ShouldCallOnlyOnErrorHandler(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{errors.New("Error")}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
@@ -76,8 +80,9 @@ func TestFromOperator_ShouldCallOnlyOnErrorHandler(t *testing.T) {
 }
 
 func TestFromOperator_ShouldNotCallOnErrorHandler(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{1}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
@@ -91,8 +96,9 @@ func TestFromOperator_ShouldNotCallOnErrorHandler(t *testing.T) {
 }
 
 func TestFromOperator_ShouldNotCallOnCompleteHandler(t *testing.T) {
+	var testObservable Observable
 	testTable := []interface{}{1, 2, errors.New("Error")}
-	observable, err := From(testTable)
+	observable, err := testObservable.From(testTable)
 	if err != nil {
 		t.Errorf("Could not create observable from Uniform data slice ")
 	}
