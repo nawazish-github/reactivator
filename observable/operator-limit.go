@@ -1,6 +1,8 @@
 package observable
 
-import "errors"
+import (
+	"errors"
+)
 
 func (observable Observable) Limit(limit int) (Observable, error) {
 
