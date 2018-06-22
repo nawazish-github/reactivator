@@ -15,5 +15,15 @@ func (observable Observable) Filter(fx filterFunc) (Observable, error) {
 	if fx == nil {
 		return observable, nil
 	}
-	return nil, nil
+
+	obsChan := make(chan interface{})
+	go func() {
+		defer close(obsChan)
+		for val := range observable {
+			if fx(val) {
+				obsChan <- val
+			}
+		}
+	}()
+	return Observable(obsChan), nil
 }
