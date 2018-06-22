@@ -21,5 +21,5 @@ func (observable Observable) Range(start int, length int) (Observable, error) {
 			i++
 		}
 	}()
-	return observable, nil
+	return obs, nil
 }
