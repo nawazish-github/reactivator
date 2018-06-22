@@ -25,3 +25,35 @@ func TestLimitOperator_ShouldReturnErrorWhenObservableIsNil(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestLimitOperator_ShouldReturnValidObservableAfterApplyingLimit(t *testing.T) {
+
+	observable := make(chan interface{}, 5)
+	for i := 1; i <= 5; i++ {
+		observable <- i
+	}
+	testObservable := Observable(observable)
+	expectation := []interface{}{1, 2}
+
+	length := 2
+	obs, _ := testObservable.Limit(length)
+	var result []interface{}
+
+	if obs == nil {
+		t.Fail()
+	}
+
+	for val := range obs {
+		result = append(result, val)
+	}
+
+	if len(expectation) != len(result) {
+		t.Fail()
+	}
+
+	for index := range expectation {
+		if expectation[index] != result[index] {
+			t.Fail()
+		}
+	}
+}
