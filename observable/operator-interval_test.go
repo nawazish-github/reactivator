@@ -39,3 +39,12 @@ ForLoop:
 		t.Fail()
 	}
 }
+
+func TestIntervalOperator_ShouldReturnErrorWhenDurationIsNegative(t *testing.T) {
+	duration := -1
+	var testObservable Observable
+	_, err := testObservable.Interval(time.Duration(duration))
+	if err == nil {
+		t.Fail()
+	}
+}
