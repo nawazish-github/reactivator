@@ -14,7 +14,6 @@ func (observable Observable) Interval(d time.Duration) (Observable, error) {
 	obs := make(chan interface{})
 
 	ticker := time.NewTicker(d)
-	//defer ticker.Stop()
 
 	counter := 0
 	go func() {
@@ -27,5 +26,5 @@ func (observable Observable) Interval(d time.Duration) (Observable, error) {
 		}
 	}()
 
-	return observable, nil
+	return obs, nil
 }
