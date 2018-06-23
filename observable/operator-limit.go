@@ -15,6 +15,7 @@ func (observable Observable) Limit(limit int) (Observable, error) {
 	}
 
 	obsChan := make(chan interface{}, limit) //is buffering a right idea?
+	isObsChanClosed := false
 
 	counter := 1
 	for val := range observable {
@@ -23,8 +24,12 @@ func (observable Observable) Limit(limit int) (Observable, error) {
 			obsChan <- val
 		} else {
 			close(obsChan)
+			isObsChanClosed = true
 			break
 		}
+	}
+	if !isObsChanClosed {
+		close(obsChan)
 	}
 	return Observable(obsChan), nil
 }
