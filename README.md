@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/nawazish-github/reactivator.svg?branch=master)](https://travis-ci.org/nawazish-github/reactivator)
+
 # reactivator
 [ReactiveX](http://reactivex.io/) implementation in the Golang Language. This library implements the **Observable Pattern** to enable asynchronous processing of Observable streams. 
 
