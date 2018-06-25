@@ -12,6 +12,7 @@
 
 ## Transforming Observables
 1. Map
+2. FlatMap
 
 ## Filtering Observables
 1. Filter
