@@ -33,9 +33,8 @@ func TestFlatMapOperator_ShouldReturnValidFlatMapObservable(t *testing.T) {
 		t.Fail()
 	}
 
-	var found bool
 	for _, val := range slice {
-		found = false
+		var found bool
 		for _, expectedData := range expectation {
 			if expectedData == val {
 				found = true
