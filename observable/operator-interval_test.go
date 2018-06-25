@@ -19,7 +19,7 @@ func TestIntervalOperator_ShouldReturnValidIntervalObserver(t *testing.T) {
 
 	doneChan := make(chan struct{})
 	go func() {
-		time.Sleep(5 * time.Second)
+		time.Sleep(5900 * time.Millisecond)
 		doneChan <- struct{}{}
 	}()
 
