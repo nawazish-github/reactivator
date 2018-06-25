@@ -6,10 +6,11 @@ import (
 
 func TestFlatMapOperator_ShouldPanicIfInputSliceLenIsZero(t *testing.T) {
 	defer func() {
-		if recover() == nil {
-			t.Errorf("Illegal Argument: soOb")
+		if x := recover(); x == nil {
+			t.Fail()
 		}
 	}()
 	var testObservable Observable
-	testObservable.FlatMap([]Observable{})
+
+	testObservable.FlatMap()
 }
