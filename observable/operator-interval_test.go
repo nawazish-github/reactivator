@@ -11,10 +11,10 @@ func TestIntervalOperator_ShouldReturnValidIntervalObserver(t *testing.T) {
 
 	observable, err := testObservable.Interval(duration)
 	if err != nil {
-		t.Fail()
+		t.Errorf("Failed to create valid Interval Observable: %v", err.Error())
 	}
 	if observable == nil {
-		t.Fail()
+		t.Errorf("Failed to create valid Interval Observable: %v", observable)
 	}
 
 	doneChan := make(chan struct{})
@@ -36,7 +36,7 @@ ForLoop:
 		}
 	}
 	if len(sliceOfInt) != 5 {
-		t.Fail()
+		t.Errorf("Interval Observer could not generate 5 elements in 5 seconds: %v", len(sliceOfInt))
 	}
 }
 
