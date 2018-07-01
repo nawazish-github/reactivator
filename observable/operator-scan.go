@@ -6,5 +6,9 @@ func (observable Observable) Scan(fx ScanFunc) Observable {
 	if observable == nil {
 		panic("Illegal Argument: Scan called on nil Observable")
 	}
+
+	if fx == nil {
+		return observable
+	}
 	return nil
 }
