@@ -14,6 +14,7 @@
 1. Map
 2. FlatMap
 3. Scan
+4. Buffer
 
 ## Filtering Observables
 1. Filter
