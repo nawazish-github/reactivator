@@ -23,3 +23,9 @@ func CompareIntegerSlices(o Observable, y []int) bool {
 	}
 	return true
 }
+
+func initializeTestObservableWithIntegers() Observable {
+	var testObservable Observable
+	ob, _ := testObservable.From([]interface{}{1, 2, 3, 4, 5, 6})
+	return ob
+}
