@@ -29,3 +29,9 @@ func initializeTestObservableWithIntegers() Observable {
 	ob, _ := testObservable.From([]interface{}{1, 2, 3, 4, 5, 6})
 	return ob
 }
+
+func initializeTestObservableOfMixedTypes() Observable {
+	var testObservable Observable
+	ob, _ := testObservable.From([]interface{}{1, 2, 3, 4.1, "a", "b"})
+	return ob
+}
