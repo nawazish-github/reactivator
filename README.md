@@ -15,6 +15,7 @@
 2. FlatMap
 3. Scan
 4. Buffer
+5. GroupBy
 
 ## Filtering Observables
 1. Filter
