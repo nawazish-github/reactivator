@@ -32,6 +32,6 @@ func initializeTestObservableWithIntegers() Observable {
 
 func initializeTestObservableOfMixedTypes() Observable {
 	var testObservable Observable
-	ob, _ := testObservable.From([]interface{}{1, 2, 3, 4.1, "a", "b"})
+	ob, _ := testObservable.From([]interface{}{11, 22, 33, 3.2, 1.4, "a"})
 	return ob
 }
